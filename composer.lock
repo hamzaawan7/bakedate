@@ -4,8 +4,117 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c0d773620e584608361198a20ee963b",
+    "content-hash": "3016c189fdc28eb80ce16d488b0915ca",
     "packages": [
+        {
+            "name": "asciisd/zcrm-php-sdk",
+            "version": "2.2.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aemaddin/zcrm-php-sdk.git",
+                "reference": "8c7655a0e518488c51cb979d65351e0416e18af0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aemaddin/zcrm-php-sdk/zipball/8c7655a0e518488c51cb979d65351e0416e18af0",
+                "reference": "8c7655a0e518488c51cb979d65351e0416e18af0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-fileinfo": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "zcrmsdk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "ASCIISD TEAM",
+                    "email": "support@asciisd.com",
+                    "homepage": "https://www.asciisd.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Zoho CRM API SDK for PHP Forked from Zoho package",
+            "homepage": "https://github.com/asciisd/zcrm-php-sdk",
+            "support": {
+                "source": "https://github.com/aemaddin/zcrm-php-sdk/tree/2.2.10"
+            },
+            "time": "2022-09-19T02:56:27+00:00"
+        },
+        {
+            "name": "asciisd/zoho",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/asciisd/zoho.git",
+                "reference": "2d30037c824cf07fafcd5c06d5ed4dd0b6887f7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/asciisd/zoho/zipball/2d30037c824cf07fafcd5c06d5ed4dd0b6887f7d",
+                "reference": "2d30037c824cf07fafcd5c06d5ed4dd0b6887f7d",
+                "shasum": ""
+            },
+            "require": {
+                "asciisd/zcrm-php-sdk": "^2.0",
+                "ext-json": "*",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "nesbot/carbon": "^2.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4.4",
+                "orchestra/testbench": "^4.0|^5.0",
+                "phpunit/phpunit": "^9.5.10"
+            },
+            "suggest": {
+                "ext-intl": "Allows for more locales besides the default \"en\" when formatting money values."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Asciisd\\Zoho\\Providers\\ZohoServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Asciisd\\Zoho\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Amr Ahmed",
+                    "email": "aemaddin@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Asciisd Zoho provide an elegant and easy way to communicate with Zoho CRM.",
+            "keywords": [
+                "Zoho",
+                "crm",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/asciisd/zoho/issues",
+                "source": "https://github.com/asciisd/zoho"
+            },
+            "time": "2022-09-19T00:43:49+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.10.2",

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cake;
+use Asciisd\Zoho\Facades\ZohoManager;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -19,6 +20,9 @@ class CakeController extends Controller
     public function index(): View|Factory|Application
     {
         $cakes = DB::table('cakes')->paginate(15);
+
+        $books = ZohoManager::useModule('Leads');
+        dd($books->getModule());
 
         return view('cake.index', [
             'cakes' => $cakes

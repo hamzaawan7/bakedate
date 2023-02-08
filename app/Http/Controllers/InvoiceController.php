@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends Controller
@@ -20,10 +19,10 @@ class InvoiceController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $invoices = DB::table('invoices')->paginate(15);
+        $invoices = Invoice::query()->paginate(15);
 
         return view('invoice.index', [
-            'invoice' => $invoices
+            'invoices' => $invoices
         ]);
     }
 
@@ -36,12 +35,9 @@ class InvoiceController extends Controller
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
-            'type' => ['required', 'string'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'company_name' => ['max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'numeric', 'min:10'],
+            'customer_id' => ['required', 'not_in:---', 'numeric'],
+            'total' => ['required', 'not_in:0', 'numeric'],
+            'invoice_date' => ['required', 'string', 'after:today']
         ]);
     }
 
@@ -61,13 +57,21 @@ class InvoiceController extends Controller
                     ->withInput();
             }
 
-            Invoice::query()->create($request->except('_token'));
+            foreach ($request->get('cake_id') as $k => $item) {
+                Invoice::query()->create([
+                    'customer_id' => (int)$request->get('customer_id'),
+                    'amount' => (int)$request->get('amount')[$k],
+                    'invoice_date' => $request->get('invoice_date'),
+                    'quantity' => (int)$request->get('quantity')[$k],
+                    'cake_id' => (int)$request->get('cake_id')[$k]
+                ]);
+            }
 
-            return redirect()->route('cake');
+            return redirect()->route('invoice');
         }
 
         $customers = Customer::query()->select(['id', 'first_name', 'last_name'])->get();
-        $cakes = Cake::query()->select(['id', 'name'])->get();
+        $cakes = Cake::query()->select(['id', 'name', 'price'])->get();
 
         return view('invoice.add', [
             'customers' => $customers,

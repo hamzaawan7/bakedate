@@ -22,7 +22,7 @@
 
                     <div class="flex items-center justify-between">
                         <div class="flex flex-wrap">
-                            <div class="xl:w-96">
+                            <div class="xl:w-96 w-80 sm:w-40">
                                 <label for="customer_id" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
                                     {{ __('Customer') }}:
                                 </label>
@@ -35,6 +35,12 @@
                                             value="{{ $customer->id }}">{{ $customer->first_name }} {{ $customer->last_name }}</option>
                                     @endforeach
                                 </select>
+
+                                @error('customer_id')
+                                <p class="text-red-500 text-xs italic mt-4">
+                                    {{ $message }}
+                                </p>
+                                @enderror
                             </div>
                         </div>
 
@@ -59,7 +65,7 @@
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                                 <div class="overflow-hidden">
-                                    <table class="min-w-full border text-center">
+                                    <table class="min-w-full border text-center" id="customFields">
                                         <thead class="border-b">
                                         <tr>
                                             <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border-r">
@@ -77,9 +83,10 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="border-b">
+                                        <tr class="border-b item">
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                <select name="cake_id"
+                                                <select name="cake_id[]"
+                                                        id="cake_id[]"
                                                         class="form-select border-none appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                         aria-label="Default select example">
                                                     <option selected>Select Item</option>
@@ -89,19 +96,23 @@
                                                 </select>
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                                                <input id="quantity" type="number"
+                                                <input type="number"
+                                                       id="quantity[]"
                                                        class="form-input border-none w-full"
-                                                       name="quantity" value="1" dir="rtl" required>
+                                                       name="quantity[]" value="1" dir="rtl" required>
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                                                <input id="quantity" type="number"
+                                                <input type="number"
+                                                       id="rate[]"
                                                        class="form-input border-none w-full"
-                                                       name="quantity" value="0" dir="rtl" required>
+                                                       name="rate[]" value="0" dir="rtl" required>
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                <input id="quantity" type="number"
-                                                        class="form-input border-none w-full"
-                                                        name="quantity" value="0" dir="rtl" required>
+                                                <input type="number"
+                                                       id="amount[]"
+                                                        class="form-input border-transparent focus:border-transparent focus:ring-0 border-none w-full"
+                                                        readonly
+                                                        name="amount[]" value="0" dir="rtl" required>
                                             </td>
                                         </tr>
                                     </table>
@@ -111,23 +122,37 @@
                     </div>
 
                     <div class="grid grid-cols-2">
-                        <div class="flex align-middle bg-slate-100 w-1/3 p-4 hover:cursor-pointer rounded-lg">
+                        <div class="flex align-middle items-center bg-slate-100 w-1/3 p-4 hover:cursor-pointer rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#408dfb" class="w-6 h-6 mr-2">
                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
                             </svg>
 
-                            <span class="text-sm mt-0.5">Add new line</span>
+                            <span class="text-sm mt-0.5" id="addItem">Add new line</span>
                         </div>
 
-                        <div class="flex rounded-lg justify-between bg-slate-100 p-5">
+                        <div class="flex rounded-lg justify-between items-center bg-slate-100 p-3">
                             <div class="text-sm">Sub Total</div>
-                            <div class="text-sm">4000</div>
+
+                            <input
+                                class="text-sm border-transparent focus:border-transparent focus:ring-0 bg-slate-100 border-none"
+                                type="number"
+                                id="total"
+                                name="total"
+                                dir="rtl"
+                                readonly
+                            />
                         </div>
+
+                        @error('total')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
                     </div>
 
                     <div class="flex flex-wrap">
                         <button type="submit"
-                                class="w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700 sm:py-4">
+                                class="select-none font-bold whitespace-no-wrap p-5 rounded-lg text-base leading-normal no-underline text-white bg-blue-500 hover:bg-blue-700 sm:py-4">
                             {{ __('Send') }}
                         </button>
                     </div>
@@ -137,3 +162,105 @@
         </div>
     </main>
 @endsection
+
+@section('scripts')
+    <script>
+        function _x(STR_XPATH) {
+            const xresult = document.evaluate(STR_XPATH, document, null, XPathResult.ANY_TYPE, null);
+            const xnodes = [];
+            let xres;
+            while (xres = xresult.iterateNext()) {
+                xnodes.push(xres);
+            }
+
+            return xnodes;
+        }
+
+        function setTotalAmount() {
+            let total = 0;
+
+            $("tr.item").each(function() {
+                const totalEle = $(this).find(_x('/html/.//input[@id="amount[]"]'));
+
+                total += parseInt(totalEle.val());
+            });
+
+            document.querySelector('#total').value = total;
+        }
+
+        function setTotal(cakes) {
+            $("tr.item").each(function() {
+                let qty = 1, rate = 0;
+                const tr = this;
+                const totalEle = $(tr).find(_x('/html/.//input[@id="amount[]"]'));
+
+                $(tr).find(_x('/html/.//input[@id="quantity[]"]')).keyup(function (e) {
+                    qty = e.target.value;
+
+                    totalEle.val(qty * rate);
+                    setTotalAmount();
+                });
+
+                $(tr).find(_x('/html/.//input[@id="rate[]"]')).keyup(function (e) {
+                    rate = e.target.value;
+
+                    totalEle.val(qty * rate);
+                    setTotalAmount();
+                });
+
+                $(tr).find(_x('/html/.//select[@id="cake_id[]"]')).change(function (e) {
+                    if (e.target.value === 'Select Item') {
+                        rate = 0;
+                    } else {
+                        rate = cakes[e.target.value - 1]?.price;
+                    }
+
+                    $(tr).find(_x('/html/.//input[@id="rate[]"]')).val(rate);
+                    totalEle.val(qty * rate);
+                    setTotalAmount();
+                });
+            });
+        }
+
+        $(document).ready(function () {
+            const cakes = {!! json_encode($cakes) !!};
+
+            $("#addItem").click(function () {
+                let options = '';
+                cakes.forEach(cake => {
+                    options += '<option value="' + cake.id + '">' + cake.name + '</option>';
+                });
+
+                $("#customFields").append(
+                    '<tr class="border-b item">' +
+                        '<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">' +
+                            ' <select name="cake_id[]" class="form-select border-none appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">' +
+                                '<option selected>Select Item</option>' +
+                                options +
+                                '</select>' +
+                        '</td>' +
+                        '<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">' +
+                            '<input type="number" id="quantity[]" class="form-input border-none w-full" name="quantity[]" value="1" dir="rtl" required>' +
+                        '</td>' +
+                        '<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">' +
+                            '<input type="number" id="rate[]" class="form-input border-none w-full" name="rate[]" value="0" dir="rtl" required>' +
+                        '</td>' +
+                        '<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">' +
+                            '<input type="number" id="amount[]" class="form-input border-none w-full" disabled name="amount[]" value="0" dir="rtl" required>' +
+                        '</td>' +
+                    '</tr>'
+                );
+
+                setTotal(cakes);
+            });
+
+            $("#customFields").on('click', '#remCF', function () {
+                $(this).parent().parent().remove();
+            });
+
+            setTotal(cakes);
+            setTotalAmount();
+        });
+    </script>
+@endsection
+

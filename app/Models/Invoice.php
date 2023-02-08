@@ -14,10 +14,12 @@ class Invoice extends Model
      * @var string[]
      */
     protected $fillable = [
+        'customer_id',
         'is_early',
         'amount',
         'invoice_date',
-        'quantity'
+        'quantity',
+        'cake_id'
     ];
 
     /**

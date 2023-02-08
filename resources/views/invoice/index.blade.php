@@ -21,11 +21,66 @@
                     Invoices
                 </header>
 
-                <div class="w-full p-6">
-                    <p class="text-gray-700">
-                        You are logged in!
-                    </p>
+                <div class="flex flex-col mx-3">
+                    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                            <div class="overflow-hidden">
+                                <table class="min-w-full text-center">
+                                    <thead class="border-b bg-gray-800">
+                                    <tr>
+                                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                            Customer
+                                        </th>
+                                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                            Cake
+                                        </th>
+                                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                            Normal
+                                        </th>
+                                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                            Invoice Date
+                                        </th>
+                                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                            Amount
+                                        </th>
+                                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                            Quantity
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    @foreach($invoices as $invoice)
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                {{ $invoice->customer->first_name }} {{ $invoice->customer->last_name }}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                {{ $invoice->cake->name }}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                {{ $invoice->is_early ? 'Yes' : 'No' }}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                {{ $invoice->invoice_date }}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                {{ $invoice->amount }}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                {{ $invoice->quantity }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                {{ $invoices->links() }}
             </section>
         </div>
     </main>
