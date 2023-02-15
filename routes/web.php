@@ -24,9 +24,13 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/cakes', [CakeController::class, 'index'])->name('cake');
     Route::match(['get', 'post'], '/cake/add', [CakeController::class, 'addCake'])->name('add-cake');
+    Route::match(['get', 'put'], '/cake/edit/{id}', [CakeController::class, 'editCake'])->name('edit-cake');
+    Route::delete('/cake/delete/{id}', [CakeController::class, 'deleteCake'])->name('delete-cake');
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customer');
     Route::match(['get', 'post'], '/customer/add', [CustomerController::class, 'addCustomer'])->name('add-customer');
+    Route::match(['get', 'put'], '/customer/edit/{id}', [CustomerController::class, 'editCustomer'])->name('edit-customer');
+    Route::delete('customer/delete/{id}', [CustomerController::class, 'deleteCustomer'])->name('delete-customer');
 
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice');
     Route::match(['get', 'post'], '/invoice/add', [InvoiceController::class, 'addInvoice'])->name('add-invoice');

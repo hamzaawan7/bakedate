@@ -4,13 +4,21 @@
     <main class="sm:container sm:mx-auto sm:mt-10">
         <div class="w-full sm:px-6">
             <div class="flex flex-row-reverse">
-                <a href="{{ route('add-invoice') }}" class="bg-white mb-5 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                <a href="{{ route('add-invoice') }}"
+                   class="inline-flex items-center bg-white mb-5 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    </svg>
+
                     Add Invoice
                 </a>
             </div>
 
             @if (session('status'))
-                <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4" role="alert">
+                <div
+                    class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4"
+                    role="alert">
                     {{ session('status') }}
                 </div>
             @endif
@@ -46,6 +54,9 @@
                                         <th scope="col" class="text-sm font-medium text-white px-6 py-4">
                                             Quantity
                                         </th>
+                                        <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                            Action
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -69,6 +80,20 @@
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {{ $invoice->quantity }}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                <button
+                                                    class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium rounded-md">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                         class="w-6 h-6 mr-0.5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
+                                                    </svg>
+
+                                                    Send
+                                                </button>
+
                                             </td>
                                         </tr>
                                     @endforeach

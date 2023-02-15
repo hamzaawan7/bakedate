@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Services\ZohoIntegration;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +15,19 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
+    /**
+     * @var ZohoIntegration
+     */
+    private ZohoIntegration $zohoIntegration;
+
+    /**
+     * @param ZohoIntegration $zohoIntegration
+     */
+    public function __construct(ZohoIntegration $zohoIntegration)
+    {
+        $this->zohoIntegration = $zohoIntegration;
+    }
+
     /**
      * @return Application|Factory|View
      */
@@ -46,6 +61,7 @@ class CustomerController extends Controller
     /**
      * @param Request $request
      * @return Application|Factory|View|RedirectResponse
+     * @throws GuzzleException
      */
     public function addCustomer(Request $request): View|Factory|RedirectResponse|Application
     {
@@ -59,11 +75,47 @@ class CustomerController extends Controller
                     ->withInput();
             }
 
-            Customer::query()->create($request->except('_token'));
+            $customer = Customer::create($request->except('_token'));
+
+            $zohoCustomer = $this->zohoIntegration->createCustomer($customer);
+
+            $customer->zoho_id = $zohoCustomer->customer->customer_id;
+            $customer->save();
 
             return redirect()->route('customer');
         }
 
         return view('customer.add');
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return Application|Factory|View|RedirectResponse
+     * @throws GuzzleException
+     */
+    public function editCustomer(Request $request, $id): View|Factory|RedirectResponse|Application
+    {
+        if ($request->isMethod('put')) {
+            $validator = $this->validator($request->all());
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $customer = Customer::find($id);
+            $customer->update($request->except('_token'));
+
+            $this->zohoIntegration->updateCustomer($customer);
+
+            return redirect()->route('customer');
+        }
+
+        $customer = Customer::query()->findOrFail($id);
+
+        return view('customer.edit', ['customer' => $customer]);
     }
 }

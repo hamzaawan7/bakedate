@@ -4,13 +4,20 @@
     <main class="sm:container sm:mx-auto sm:mt-10">
         <div class="w-full sm:px-6">
             <div class="flex flex-row-reverse">
-                <a href="{{ route('add-customer') }}" class="bg-white mb-5 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                <a href="{{ route('add-customer') }}"
+                   class="hover:cursor-pointer inline-flex items-center bg-white mb-5 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+
                     Add Customer
                 </a>
             </div>
 
             @if (session('status'))
-                <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4" role="alert">
+                <div
+                    class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4"
+                    role="alert">
                     {{ session('status') }}
                 </div>
             @endif
@@ -50,6 +57,9 @@
                                         <th scope="col" class="text-sm font-medium text-white px-6 py-4">
                                             Address
                                         </th>
+                                        <th scope="col" class="text-sm font-medium text-white py-4">
+                                            Action
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -77,6 +87,36 @@
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {{ $customer->address }}
                                             </td>
+                                            <td class="text-sm text-gray-900 font-light px-0 py-3 whitespace-nowrap">
+                                                <a href="{{ route('edit-customer', $customer->id) }}"
+                                                   class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-blue-500 text-sm font-medium rounded-md">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="#3b82f6"
+                                                         class="w-4 h-4 mr-0.5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/>
+                                                    </svg>
+
+                                                    Edit
+                                                </a> /
+                                                <form @click="handleSubmit"
+                                                      class="inline">
+                                                    @csrf
+                                                    @method('delete')
+
+                                                    <button
+                                                         class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-red-500 text-sm font-medium rounded-md">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="#ef4444"
+                                                             class="w-4 h-4 mr-0.5">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  d="M6 18L18 6M6 6l12 12"/>
+                                                        </svg>
+
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -91,4 +131,12 @@
             </section>
         </div>
     </main>
+@endsection
+
+@section('scripts')
+    <script>
+        function handleSubmit(e) {
+            alert('eer');
+        }
+    </script>
 @endsection

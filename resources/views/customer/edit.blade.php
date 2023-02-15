@@ -13,11 +13,11 @@
             <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
 
                 <header class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md">
-                    Add Customer
+                    Edit Customer
                 </header>
 
                 <form class="w-full px-6 space-y-6 sm:px-10 sm:space-y-8 mb-10" method="POST"
-                      action="{{ route('add-customer') }}">
+                      action="{{ route('edit-customer', $customer->id) }}">
                     @csrf
 
                     <div class="flex flex-wrap align-middle">
@@ -28,7 +28,8 @@
                                 name="type"
                                 id="business"
                                 value="business"
-                                checked>
+                                {!! $customer->type === 'business' ? 'checked' : '' !!}
+                            >
                             <label class="form-check-label inline-block text-gray-800" for="business">Business</label>
                         </div>
                         <div class="form-check form-check-inline ml-5">
@@ -37,7 +38,9 @@
                                 type="radio"
                                 name="type"
                                 id="individual"
-                                value="individual">
+                                value="individual"
+                                {!! $customer->type === 'individual' ? 'checked' : '' !!}
+                            >
                             <label class="form-check-label inline-block text-gray-800"
                                    for="individual">Individual</label>
                         </div>
@@ -50,7 +53,7 @@
 
                         <input id="first_name" type="text"
                                class="form-input w-full @error('first_name')  border-red-500 @enderror"
-                               name="first_name" value="{{ old('first_name') }}" required autocomplete="name" autofocus>
+                               name="first_name" value="{{ $customer->first_name }}" required autocomplete="name" autofocus>
 
                         @error('first_name')
                         <p class="text-red-500 text-xs italic mt-4">
@@ -66,7 +69,7 @@
 
                         <input id="last_name" type="text"
                                class="form-input w-full @error('last_name')  border-red-500 @enderror"
-                               name="last_name" value="{{ old('last_name') }}" required>
+                               name="last_name" value="{{ $customer->last_name }}" required>
 
                         @error('last_name')
                         <p class="text-red-500 text-xs italic mt-4">
@@ -82,7 +85,7 @@
 
                         <input id="company_name" type="text"
                                class="form-input w-full @error('company_name')  border-red-500 @enderror"
-                               name="company_name" value="{{ old('company_name') }}">
+                               name="company_name" value="{{ $customer->company_name }}">
 
                         @error('company_name')
                         <p class="text-red-500 text-xs italic mt-4">
@@ -98,7 +101,7 @@
 
                         <input id="email" type="email"
                                class="form-input w-full @error('email') border-red-500 @enderror" name="email"
-                               value="{{ old('email') }}" required autocomplete="email">
+                               value="{{ $customer->email }}" required autocomplete="email">
 
                         @error('email')
                         <p class="text-red-500 text-xs italic mt-4">
@@ -112,7 +115,7 @@
                             {{ __('Phone') }}:
                         </label>
 
-                        <input id="phone" type="tel" value="{{ old('phone') }}"
+                        <input id="phone" type="tel" value="{{ $customer->phone }}"
                                class="form-input w-full @error('phone') border-red-500 @enderror" name="phone">
 
                         @error('phone')
@@ -127,7 +130,7 @@
                             {{ __('Address') }}:
                         </label>
 
-                        <input id="address" type="text" class="form-input w-full" value="{{ old('address') }}"
+                        <input id="address" type="text" class="form-input w-full" value="{{ $customer->address }}"
                                name="address">
 
                         @error('address')
@@ -140,7 +143,7 @@
                     <div class="flex flex-wrap">
                         <button type="submit"
                                 class="select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700 sm:py-4">
-                            {{ __('Add') }}
+                            {{ __('Submit') }}
                         </button>
                     </div>
                 </form>

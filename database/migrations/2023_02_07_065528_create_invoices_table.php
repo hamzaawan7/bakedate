@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('quantity')->unsigned();
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('cake_id')->unsigned();
+            $table->string('zoho_id')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_id')

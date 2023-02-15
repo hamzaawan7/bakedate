@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->float('price');
+            $table->string('zoho_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

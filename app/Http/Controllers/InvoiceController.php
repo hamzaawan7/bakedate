@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cake;
 use App\Models\Customer;
 use App\Models\Invoice;
+use App\Services\ZohoIntegration;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,6 +16,19 @@ use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends Controller
 {
+    /**
+     * @var ZohoIntegration
+     */
+    private ZohoIntegration $zohoIntegration;
+
+    /**
+     * @param ZohoIntegration $zohoIntegration
+     */
+    public function __construct(ZohoIntegration $zohoIntegration)
+    {
+        $this->zohoIntegration = $zohoIntegration;
+    }
+
     /**
      * @return Application|Factory|View
      */
