@@ -5,7 +5,12 @@
         <div class="w-full sm:px-10 mb-10">
             <div class="flex mb-5">
                 <a href="{{ route('customer') }}"
-                   class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                   class="bg-white inline-flex items-center hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+                    </svg>
+
                     Back
                 </a>
             </div>
@@ -76,6 +81,22 @@
                     </div>
 
                     <div class="flex flex-wrap">
+                        <label for="display_name" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
+                            {{ __('Display Name') }}:
+                        </label>
+
+                        <input id="display_name" type="text"
+                               class="form-input w-full @error('display_name')  border-red-500 @enderror"
+                               name="display_name" value="{{ old('display_name') }}" required>
+
+                        @error('display_name')
+                        <p class="text-red-500 text-xs italic mt-4">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+
+                    <div class="flex flex-wrap">
                         <label for="company_name" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
                             {{ __('Company Name') }}:
                         </label>
@@ -139,8 +160,8 @@
 
                     <div class="flex flex-wrap">
                         <button type="submit"
-                                class="select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700 sm:py-4">
-                            {{ __('Add') }}
+                                class="px-6 select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700 sm:py-4">
+                            {{ __('Create') }}
                         </button>
                     </div>
                 </form>

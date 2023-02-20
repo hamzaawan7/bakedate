@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent;
+use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,7 @@ use Illuminate\Support\Carbon;
  * @property string $type
  * @property string $first_name
  * @property string $last_name
+ * @property string $display_name
  * @property string $company_name
  * @property string $email
  * @property string|null $phone
@@ -43,6 +45,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Customer whereFirstName($value)
  * @method static Builder|Customer whereId($value)
  * @method static Builder|Customer whereLastName($value)
+ * @method static Builder|Customer whereDisplayName($value)
  * @method static Builder|Customer wherePhone($value)
  * @method static Builder|Customer whereType($value)
  * @method static Builder|Customer whereUpdatedAt($value)
@@ -59,8 +62,10 @@ class Customer extends Model
      * @var string[]
      */
     protected $fillable = [
+        'type',
         'first_name',
         'last_name',
+        'display_name',
         'email',
         'company_name',
         'phone',

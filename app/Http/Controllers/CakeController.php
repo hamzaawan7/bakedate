@@ -59,8 +59,8 @@ class CakeController extends Controller
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'company_name' => ['max:255'],
+            'name' => ['required', 'string', 'max:25'],
+            'description' => ['max:25'],
             'price' => ['required', 'numeric'],
         ]);
     }

@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Log;
 
 class CustomerController extends Controller
 {
@@ -46,15 +47,18 @@ class CustomerController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
+    protected function validator(array $data, $id = 0): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
             'type' => ['required', 'string'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'company_name' => ['max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'numeric', 'min:10'],
+            'first_name' => ['required', 'string', 'max:25'],
+            'last_name' => ['required', 'string', 'max:25'],
+            'display_name' => ['required', 'string', 'max:55', "unique:customers,display_name,".$id],
+            'company_name' => ['max:25'],
+            'email' => ['required', 'string', 'email', 'max:55', 'unique:customers,email,'.$id],
+            'phone' => ['required', 'numeric', 'min:10']
+        ], [
+            'display_name.unique' => 'Sorry, this display name has already been taken!'
         ]);
     }
 
@@ -79,8 +83,12 @@ class CustomerController extends Controller
 
             $zohoCustomer = $this->zohoIntegration->createCustomer($customer);
 
-            $customer->zoho_id = $zohoCustomer->customer->customer_id;
-            $customer->save();
+            if ($zohoCustomer->code != 0) {
+                Log::error(json_encode($zohoCustomer));
+            } else {
+                $customer->zoho_id = $zohoCustomer->customer->customer_id;
+                $customer->save();
+            }
 
             return redirect()->route('customer');
         }
@@ -97,7 +105,7 @@ class CustomerController extends Controller
     public function editCustomer(Request $request, $id): View|Factory|RedirectResponse|Application
     {
         if ($request->isMethod('put')) {
-            $validator = $this->validator($request->all());
+            $validator = $this->validator($request->all(), $id);
 
             if ($validator->fails()) {
                 return redirect()

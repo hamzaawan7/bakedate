@@ -14,6 +14,6 @@
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
-    @yield('content')
+@yield('content')
 </body>
 </html>

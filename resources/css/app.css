@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+nav[role="navigation"] {
+    margin-block: 20px;
+    margin-left: 20px;
+}
+

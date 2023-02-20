@@ -7,7 +7,8 @@
             <a href="{{ route('customer') }}" class="text-normal font-normal tracking-widest dark:text-gray-200">Customer</a>
         </div>
         <div class="space-y-1">
-            <a href="{{ route('invoice') }}" class="text-normal font-normal tracking-widest dark:text-gray-200">Invoices</a>
+            <a href="{{ route('invoice') }}"
+               class="text-normal font-normal tracking-widest dark:text-gray-200">Invoices</a>
         </div>
     </nav>
 </aside>

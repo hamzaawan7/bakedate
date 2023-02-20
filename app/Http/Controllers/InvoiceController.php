@@ -73,7 +73,7 @@ class InvoiceController extends Controller
             }
 
             foreach ($request->get('cake_id') as $k => $item) {
-                Invoice::query()->create([
+                Invoice::create([
                     'customer_id' => (int)$request->get('customer_id'),
                     'amount' => (int)$request->get('amount')[$k],
                     'invoice_date' => $request->get('invoice_date'),
@@ -85,7 +85,7 @@ class InvoiceController extends Controller
             return redirect()->route('invoice');
         }
 
-        $customers = Customer::query()->select(['id', 'first_name', 'last_name'])->get();
+        $customers = Customer::query()->select(['id', 'display_name'])->get();
         $cakes = Cake::query()->select(['id', 'name', 'price'])->get();
 
         return view('invoice.add', [

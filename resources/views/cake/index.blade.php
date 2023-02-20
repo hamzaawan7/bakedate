@@ -6,8 +6,9 @@
             <div class="flex flex-row-reverse">
                 <a href="{{ route('add-cake') }}"
                    class="inline-flex items-center bg-white mb-5 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                     </svg>
 
                     Add Cake
@@ -80,7 +81,8 @@
 
                                                     Edit
                                                 </a> /
-                                                <form action="{{ route('delete-cake', $cake->id) }}" class="inline" method="POST">
+                                                <form action="{{ route('delete-cake', $cake->id) }}" class="inline"
+                                                      method="POST">
                                                     @csrf
                                                     @method('delete')
 

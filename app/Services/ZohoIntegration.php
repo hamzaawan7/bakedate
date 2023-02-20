@@ -23,7 +23,7 @@ class ZohoIntegration
     /**
      * @var string
      */
-    private string $refreshToken = "1000.397a23dab08e6c90a2deca0d6bacdabe.6e46605c160abceb49d6daab75754a3a";
+    private string $refreshToken = "1000.742fc55d4be67dfc1e1d2864835063fc.e87b42b92407a3680edd2d7bb23650f7";
 
     /**
      * @var string
@@ -92,12 +92,12 @@ class ZohoIntegration
         $token = $this->auth()->access_token;
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-            'Accept' => 'application/json',
+            'Authorization' => 'Zoho-oauthtoken ' . $token,
+            'content-type' => 'application/json',
             'X-com-zoho-subscriptions-organizationid' => '802152555'
         ])
             ->post('https://www.zohoapis.com/subscriptions/v1/customers', [
-                'display_name' => $customer->first_name . ' ' . $customer->last_name,
+                'display_name' => $customer->display_name,
                 'first_name' => $customer->first_name,
                 'last_name' => $customer->last_name,
                 'email' => $customer->email,
@@ -120,11 +120,11 @@ class ZohoIntegration
         $token = $this->auth()->access_token;
 
         $res = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $token,
-            'Accept' => 'application/json',
+            'Authorization' => 'Zoho-oauthtoken ' . $token,
+            'content-type' => 'application/json',
             'X-com-zoho-subscriptions-organizationid' => '802152555'
         ])->put('https://www.zohoapis.com/subscriptions/v1/customers/' . $customer->zoho_id, [
-            'display_name' => $customer->first_name . ' ' . $customer->last_name,
+            'display_name' => $customer->display_name,
             'first_name' => $customer->first_name,
             'last_name' => $customer->last_name,
             'email' => $customer->email,
@@ -187,7 +187,7 @@ class ZohoIntegration
         $res = Http::withHeaders([
             'Authorization' => 'Zoho-oauthtoken ' . $token,
             'content-type' => 'application/json',
-        ])->put('https://www.zohoapis.com/books/v3/items' . $cake->zoho_id . '?organization_id=802152555', [
+        ])->put('https://www.zohoapis.com/books/v3/items/' . $cake->zoho_id . '?organization_id=802152555', [
             'name' => $cake->name,
             'rate' => $cake->price,
             'description' => $cake->description ?: '',
